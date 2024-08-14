@@ -9,7 +9,7 @@ const routes = () => {
     router.get("/", controller.list);
     router.get("/:id", controller.show);
     router.put("/:id", controller.update);
-    // router.delete("/:id", controller.delete);
+    router.delete("/:id", controller.delete);
 
     return router
 }
