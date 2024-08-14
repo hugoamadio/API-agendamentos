@@ -58,6 +58,39 @@ class SchedulesController {
         return res.status(500).json({ success: false, msg: "Error database" })
     }
   }
+
+  public async update(req: Request, res: Response){
+    const { id } = req.params
+    const { email, phone, datatime } = req.body
+    try{
+        if( !email && !phone && !datatime){
+            return res.status(400).json({ sucess: false, msg: "Required fields missing" })
+        }
+
+        const schedule = db.schedules.findUnique({
+            where:{
+                id
+            }
+        })
+
+        if(!schedule){
+            return res.status(404).json({ success: false, msg: "Schedule not found" })
+        }
+
+        await db.schedules.update({
+            where: {
+                id
+            },
+            data: {
+                email, phone, datatime
+            }
+        })
+
+        return res.status(200).json({ success: true, msg: "Schedule updated" })
+    } catch(err){
+        return res.status(500).json({ success: false, msg: "Error database" })
+    }
+  }
 }
 
 export default SchedulesController;
