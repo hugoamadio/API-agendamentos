@@ -27,6 +27,18 @@ class SchedulesController {
       return res.status(500).json({ success: false, msg: "Error database" });
     }
   }
+
+  public async list(req: Request, res: Response){
+    try{
+        const schedule = await db.schedules.findMany()
+        if(!schedule){
+            return res.status(400).json({ success: false, msg: "Sheldule not listed" })
+        }
+        return res.status(200).json({ success: true, msg:"Scheldul listing", data: schedule })
+    } catch(err){
+        return res.status(500).json({ success: false, msg: "Error database" })
+    }
+  }
 }
 
 export default SchedulesController;
